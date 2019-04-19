@@ -13,7 +13,7 @@ class App extends React.Component {
     this.state = {
       todos : Todos,
       isLoading : true
-    } 
+    }
   }
 
   componentDidMount() {

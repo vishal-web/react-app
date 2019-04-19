@@ -14,7 +14,6 @@ class Api extends React.Component {
 
 	componentDidMount() {
 		let url = 'https://swapi.co/api/people/1';
-
 		this.setState({loading:true})
 		fetch(url)
 			.then(response =>  response.json())

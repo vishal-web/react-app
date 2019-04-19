@@ -2222,7 +2222,7 @@ fieldset[disabled] .radio label {
 .checkbox-inline input[type=checkbox],
 .radio input[type=radio],
 .radio-inline input[type=radio] {
-	position: absolute;
+	/*position: absolute;*/
 	margin-top: 4px\9 !important;
 	/*margin-left: -20px*/
 }
