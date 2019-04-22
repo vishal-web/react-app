@@ -12,7 +12,7 @@ class Api extends React.Component {
 		}
 	}
 
-	componentDidMount() {
+	/*componentDidMount() {
 		let url = 'https://swapi.co/api/people/1';
 		this.setState({loading:true})
 		fetch(url)
@@ -23,10 +23,10 @@ class Api extends React.Component {
 					user : data
 				})
 			}); 
-	}
+	}*/
 
 	render() {
-		const text = this.state.loading ? 'loading...' : this.state.user.name;
+		// const text = this.state.loading ? 'loading...' : this.state.user.name;
 		return (
 			<div>
 				<Register />

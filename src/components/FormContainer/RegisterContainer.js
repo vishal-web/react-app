@@ -1,5 +1,7 @@
 import React from 'react';
 import RegisterComponent from '../FormComponent/RegisterComponent'
+import axios from 'axios'
+import qs from 'qs';
 
 const PORT = 3001; 
 const API = 'http://localhost:' + PORT;
@@ -23,6 +25,7 @@ class RegisterContainer extends React.Component {
 			},
 			products : [],
 			isLoaded : false,
+			formError : '',
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -78,25 +81,45 @@ class RegisterContainer extends React.Component {
 		this.handleValidateInput(event);
 	}
 
-	handleValidateInput(e) {
+	async handleValidateInput(e) {
 		e.preventDefault();
-	
-		let url = API + '/product/list'; 
-		fetch(url)
-			.then((response) => {
-				return response.json();
-			})
-			.then((products) => {
-				// products = JSON.stringify(products); 
-				if (products.status === 'success') {
-					this.state.product = products.data;
-				} 
+	 	
+	 	let url = API + '/api/signup'; 
+		
+		let formData = qs.stringify({
+			name : this.state.name,
+			email : this.state.email,
+			password : this.state.password,
+			gender : this.state.gender,
+			position : this.state.position, 
+			knowledge : this.state.knowledge, 
+		});
 
-				// console.log(JSON.stringify(products));
-			})
+ 		let config = {
+ 			headers : {
+ 				'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+ 			}
+ 		} 
+
+ 		axios.post(url, formData, config)
+ 			.then((response) => { 
+ 				return response;
+ 			})
+ 			.catch((error) => {
+ 				console.log(JSON.stringify(error))
+ 			})
+ 			.then((data) => { 
+ 				data = data.data;  
+
+ 				if (data.status === 'error') {
+ 					this.setState({formError : data.errors});
+ 				}
+ 				console.log(this.state.formError);
+  		});
+
 	}
 
-	componentDidMount() {
+	/*componentDidMount() {
 		let url = API + '/product/list'; 
 		fetch(url)
 		.then((response) => {
@@ -108,20 +131,19 @@ class RegisterContainer extends React.Component {
 				products : result.data, 
 			})
 
-			console.log(this.state.products);
+			// console.log(this.state.products);
 		})
-	}		
+	}*/		
 
 
 	render() {
 		return (
-			<div className='container'>
+			<div className=''>
 				<RegisterComponent 
 					handleSubmit={this.handleSubmit} 
 					handleChange={this.handleChange} 
 					formData={this.state}
 				/>
-
 			</div>
 		)
 	}
